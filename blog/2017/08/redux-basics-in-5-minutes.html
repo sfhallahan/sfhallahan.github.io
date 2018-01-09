@@ -1,0 +1,87 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Redux Basics in 5 Minutes or Less - Sean Hallahan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/main.js"></script>
+  </head>
+  <body>
+      <header id="header" class="header nav-down">
+          <div class="site-title-container">
+            <div id="site-title"><a href="/">Sean Hallahan</a></div>
+            <span id="site-subtitle">Full-stack web developer</span>
+          </div>
+          <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false">
+		           <i class="fa fa-bars" title="primary menu icon" aria-hidden="true"></i>
+	        </button>
+          <div class="nav-container closed" id="nav-container">
+            <ul class="nav-options">
+              <li class="nav-item"><a href="/">ABOUT</a></li>
+              <li class="nav-active nav-item"><a href="/blog">BLOG</a></li>
+              <li class="nav-item"><a href="/projects">PROJECTS</a></li>
+            </ul>
+            <ul class="social-options">
+              <li class="social-icon"><a href="https://twitter.com/seanhallahan1"><i class="fab fa-twitter-square"></i></a></li>
+              <li class="social-icon"><a href="https://linkedin.com/in/sean-hallahan-34a041142"><i class="fab fa-linkedin"></i></a></li>
+              <li class="social-icon"><a href="https://github.com/sfhallahan"><i class="fab fa-github"></i></a></li>
+            </ul>
+          </div>
+      </header>
+      <article class="post-container">
+          <h1 class="post-title centered-text">Redux Basics in 5 Minutes (or less)</h1>
+          <span class="post-date centered-text">August 11, 2017</span>
+          <figure class="img-small-width">
+            <img class="img-half-column" src="/img/redux-logo.png">
+            <figcaption class="img-caption">
+              Boom, the beautiful Redux logo
+            </figcaption>
+          <p>If you're using React to build your app, chances are you've heard of
+            Redux. Redux is a "predictable state container for JavaScript apps"
+            based on the Flux design pattern. There are many reasons people are
+            raving about Redux, predictability of outcome, maintainability,
+            server side rendering, the list goes on and on. But you're here to
+            get the 50,000 foot overview so you can chime in at the lunch table
+            tomorrow and impress all your friends.</p>
+          <p>Alright, that didn't count towards the 5 minutes... Ready go!</p>
+          <h3 class="sub-header">Key Concepts</h3>
+          <p><b>State/State Tree - </b>The whole state of your application is represented as a single JavaScript object called the state or State Tree. The state/state tree is READ-ONLY, you cannot write to it. Any time you want to make a change you have to dispatch an action.</p>
+          <p><b>Action - </b>An action is a plain JavaScript object that describes the change. Each action must have a "type" property, this is usually a string (so that it is serializable) and it cannot be undefined. Aside from that one restriction, you can build your action object to contain whatever information you need to define the change. With an action defined, you have the input</p>
+          <p><b>Reducer - </b>Reducers allow you to implement the update logic of your app. A reducer is a pure function <a class="hyperlink" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">(brush up on your understanding of pure functions here)</a> that takes the previous state of the app, an action, and returns the next state. The object returned is a new state object, remember state is immutable.</p>
+          <p><b>Store - </b>The store is how you tie it all together. The store holds current state, lets you dispatch actions, and allows you to specify your reducers. In Redux there is a single store with a single root reducing function. To create a store you simply call the createStore method from Redux and pass it your reducer. The store object has 3 important methods</p>
+          <ol>
+            <li><b>getState() </b> - Gets the current application state</li>
+            <li><b>dispatch(action) </b> - Changes the current application state. Takes the action as an argument and passes it, along with the current state, to the reducer.</li>
+            <li><b>subscribe(function) </b> - Allows functions to subscribe to the changes so that they can react/re-render with the new state</li>
+          </ol>
+          <p>In a simple use case you would have a render method subscribed to the store. That render method would user the .getState() method to make sure it had the latest and greatest state to display on the UI. An event on the UI would call the dispatch method, which would in turn update the state. The render method which is subscribed would be notified of the update, get the new state and re-render.</p>
+          <h3 class="sub-header">Simple example</h3>
+          <p>
+            I believe a code example is worth a thousand words.. so I borrowed
+            the example from the <a class="hyperlink" href="http://redux.js.org/">Redux docs</a> (which I highly recommend going through
+            when you have more than 5 minutes), stripped it down and updated it to ES6 syntax. It's a simple counter app that allows your to increment and decrement the number displayed in the browser. It's just one html file with our Redux JavaScript baked right in. The full source code can be found on <a class="hyperlink" href="https://github.com/sfhallahan/reduxCounterExample">GitHub</a>.
+          </p>
+          <p>To start, here is the html we will be using.</p>
+          <script src="https://gist.github.com/sfhallahan/efd76b7206e42517c5bd84c0aa8273ae.js"></script>
+          <p>Since we are using a single HTML file make sure to include a script tag in the header to add Redux to your app. The src is "<a class="hyperlink" href="https://unpkg.com/redux@latest/dist/redux.min.js">https://unpkg.com/redux@latest/dist/redux.min.js</a>".</p>
+          <p>Now on to redux. First we define our simple actions</p>
+          <script src="https://gist.github.com/sfhallahan/0f4b35de62b4902308c86db584277e97.js"></script>
+          <p>Next we need to define our reducer. Remember it needs to take our current state and an action and return a new state object.</p>
+          <script src="https://gist.github.com/sfhallahan/57a6817ba47b0a4473b9902d377657da.js"></script>
+          <p>We need to create our store by calling the Redux createStore method and passing it our reducer.</p>
+          <p>Then we'll render our updates using a… render method. Note how it uses the Redux store getState() method. We're also going to subscribe our render method to the store so that it knows to get the state when a change is made. We're also making an initial call to the render method so that the initial count of 0 displays when you load the page.</p>
+          <script src="https://gist.github.com/sfhallahan/3bc305a9995745ccf2ea3f221657cfc4.js"></script>
+          <p>Last but not least, we need our dispatch our actions when UI events occur. In our case they look like this</p>
+          <script src="https://gist.github.com/sfhallahan/6e19bb84ca54eb163d13205bebffb2d1.js"></script>
+          <p>There you have it, a nice little Redux app to play around with. Hopefully you now have a high level understanding of Redux and can go out there and impress all your friends. If you have any feedback or questions, you can always reach me on my twitter or linkedIn. Just click the icons in the navigation bar.</p>
+      </article>
+      <footer class="footer">
+          <p class="footer-text">
+            &copy; 2018, Sean Hallahan
+          </p>
+      </footer>
+  </body>
+</html>

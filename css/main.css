@@ -31,6 +31,11 @@ ul {
   padding: 0;
 }
 
+ol {
+  line-height: 1.5;
+  font-size: 18px;
+}
+
 .centered-text {
   text-align: center;
 }
@@ -101,14 +106,24 @@ ul {
   width: 100%;
   grid-column: 4;
   background-color: #fff;
-  box-shadow: 3px 7px 7px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 3px 5px 7px 4px rgba(0, 0, 0, 0.19);
   padding-bottom: 30px;
   margin-top: 36px;
+  transition: transform .5s;
+}
+.card:hover {
+  transform: scale(1.02);
+  transition: transform .5s;
 }
 
 .card-img {
-  width: 100%;
+  max-width: 100%;
   max-height: 300px;
+  object-fit: contain;
+}
+
+.card-img-padding {
+  padding-top: 10px;
 }
 
 .card-date {
@@ -148,7 +163,6 @@ ul {
   line-height: 44px;
   letter-spacing: -0.63px;
   margin: 0;
-  text-align: center;
 }
 
 .sub-header {
@@ -157,7 +171,6 @@ ul {
   line-height: 34px;
   letter-spacing: -0.45px;
   margin: 30px 0 0 0;
-  text-align: center;
 }
 
 
@@ -195,6 +208,20 @@ ul {
   text-align: center;
   padding: 24px 0;
   margin: 12px 0;
+}
+
+.img-half-column {
+  width: 50%;
+  display: block;
+  margin: auto;
+}
+
+.hyperlink{
+  color: #3BCABD;
+}
+
+.hyperlink:hover {
+  text-decoration: underline;
 }
 
 /* For mobile */
