@@ -218,12 +218,15 @@ ol {
 
 .hyperlink{
   color: #3BCABD;
+  word-wrap: break-word;
 }
 
 .hyperlink:hover {
   text-decoration: underline;
 }
-
+.gist {
+   overflow:auto;
+}
 /* For mobile */
 @media only screen and (max-width: 720px) {
   .header {
