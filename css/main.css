@@ -173,6 +173,13 @@ ol {
   margin: 30px 0 0 0;
 }
 
+.section-header {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.45px;
+  margin: 15px 0 0 0;
+}
 
 .quote {
   grid-column: 3 / 5;
