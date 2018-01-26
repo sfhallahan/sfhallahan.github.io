@@ -1,5 +1,5 @@
 /*
-  "grunt" alone creates a new, completed images directory
+  "grunt" runs clean, copies images from fixed directory and processing images
   "grunt clean" removes the images directory
   "grunt responsive_images" re-processes images without removing the old ones
 */
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             quality: 60
           },
           {
-            width: 640,
+            width: 760,
             suffix: "w",
             quality: 80
           },
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     /* Clear out the img directory if it exists */
     clean: {
       dev: {
-        src: ['img/*.{gif,jpg,png}']
+        src: ['img/*.{gif,jpg,png,svg}']
       }
     },
 
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       dev: {
         files: [{
           expand: true,
-          src: 'img/img_src/fixed/*.{gif,jpg,png}',
+          src: 'img/img_src/fixed/*.{gif,jpg,png,svg}',
           dest: 'img/',
           flatten: true
         }]

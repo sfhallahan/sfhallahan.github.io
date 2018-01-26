@@ -22,7 +22,7 @@ p {
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
 }
 
 ul {
@@ -164,6 +164,11 @@ ol {
   color: rgba(0,0,0,0.3);
 
 }
+.restrict-img-height {
+  max-height: 400px;
+  object-fit: cover;
+  width:100%;
+}
 
 .post-title {
   font-size: 36px;
@@ -230,6 +235,11 @@ ol {
   width: 50%;
   display: block;
   margin: auto;
+}
+
+.redux-logo-large {
+  width: 320px;
+  height: 320px;
 }
 
 .side-by-side {
