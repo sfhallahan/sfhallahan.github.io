@@ -22,7 +22,7 @@ p {
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
 }
 
 ul {
@@ -121,7 +121,7 @@ button, submit {
 }
 
 .card-img {
-  max-width: 100%;
+  width: 100%;
   max-height: 300px;
 
 }
@@ -140,7 +140,7 @@ button, submit {
 
 .card-date {
   font-size: 16px;
-  color: rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.6);
   margin: 0 0 5px 0;
   padding: 15px 15px 0px 15px;
 }
@@ -167,6 +167,11 @@ button, submit {
   font-size: 20px;
   color: rgba(0,0,0,0.3);
 
+}
+.restrict-img-height {
+  max-height: 400px;
+  object-fit: cover;
+  width:100%;
 }
 
 .post-title {
@@ -234,6 +239,11 @@ button, submit {
   width: 50%;
   display: block;
   margin: auto;
+}
+
+.redux-logo-large {
+  width: 320px;
+  height: 320px;
 }
 
 .side-by-side {
