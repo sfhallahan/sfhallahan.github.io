@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-102583605-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <title>Adding a Service Worker to your App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Tutorial on adding a service worker to your web application. Part 1 Registering your Service Worker">
+    <meta charset="UTF-8">
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/main.js"></script>
+  </head>
+  <body>
+      <header id="header" class="header nav-down">
+          <div class="site-title-container">
+            <div id="site-title"><a href="/">Sean Hallahan</a></div>
+            <span id="site-subtitle">Full-stack web developer</span>
+          </div>
+          <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
+		           <i class="fa fa-bars" title="primary menu icon" aria-hidden="true"></i>
+	        </button>
+          <div class="nav-container closed" id="nav-container">
+            <ul class="nav-options">
+              <li class="nav-item"><a href="/">ABOUT</a></li>
+              <li class="nav-active nav-item"><a href="/blog">BLOG</a></li>
+              <li class="nav-item"><a href="/projects">PROJECTS</a></li>
+            </ul>
+            <ul class="social-options">
+              <li class="social-icon"><a href="https://twitter.com/seanhallahan1"><i class="fab fa-twitter-square"></i></a></li>
+              <li class="social-icon"><a href="https://linkedin.com/in/sean-hallahan-34a041142"><i class="fab fa-linkedin"></i></a></li>
+              <li class="social-icon"><a href="https://github.com/sfhallahan"><i class="fab fa-github"></i></a></li>
+            </ul>
+          </div>
+      </header>
+      <article class="post-container">
+          <h1 class="post-title centered-text">Adding a Service Worker to your Web App</h1>
+          <h1 class="post-title centered-text">Part 1 - Registering a Service Worker</h1>
+          <span class="post-date centered-text">February 6, 2018</span>
+          <p style="font-style: italic;">
+            This is part 1 of my 3 part series on Service workers. You can access
+            Part 2 here and Part 3 here.
+          </p>
+          <figure class="img-full-width">
+            <img src="/img/PWA.jpg"
+                 srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w"
+                 class="restrict-img-height"
+                 alt="Display of mobile homescreen">
+          </figure>
+          <h5 class="section-header">What is a Service Worker?</h5>
+          <p>
+            A service worker is a JavaScript worker that gives web developers
+            the ability to provide their users with native-like experience on
+            the mobile web. They are the workhorse behind Progressive Web Apps
+            (which I wrote about <a class="hyperlink" href="/blog/2018/01/what-is-a-pwa.html">
+            here</a>) and are opening the door to mobile functionality like push
+            notifications, background sync and an offline-first experience.
+          </p>
+          <h5 class="section-header">Why do you want one?</h5>
+          <p>Control. With this tool you are the master of your application, no
+            longer a slave to poor network connectivity. Your users get the experience
+            you worked so hard to deliver, no matter where they are trying to access it
+            from. Service Workers help achieve this connection independent functionality
+            by acting as a network proxy,  intercepting and manipulating network
+            requests and responses.
+          </p>
+          <h5 class="section-header">Adding a Service Worker to your App</h5>
+          <p>Alright, you are convinced, now let's get to the good stuff. We are
+            going to add a Service Worker to our app, cache and serve critical assets and use the Service worker lifecycle hooks to update our app.
+            There is a decent amount to this so I’ve broken the set up into 3 parts.
+          </p>
+          <ol>
+            <li>Part 1: Register a Service Worker</li>
+            <li>Part 2: Intercept network requests and serve saved assets from the cache</li>
+            <li>Part 3: Provide support for unintrusive app updates</li>
+          </ol>
+          <h5 class="section-header">Step 0: Setup</h5>
+          <p>For the purposes of this exercise, I will be working off a little
+            React web app that I built. It uses the icanhazdadjoke api to give
+            users the ability to view and search the corniest dad jokes around
+            (demo app is here). If you want to follow along you can clone the repo
+            here, or even better, follow along and add service worker to a web app
+            you’ve built.
+          </p>
+          <p>Side note: If you’re planning on deploying your app with a Service
+              Worker, you’ll need https, but if you’re just running it on localhost
+              you should be fine.
+          </p>
+          <h5 class="section-header">Step 1: Create the Service Worker File</h5>
+          <p>Branch: git checkout add-sw-part1-start</p>
+          <p>
+            Since your Service Worker is a javascript worker, it runs separate
+            from your webpage. You need to tell your app that the service worker
+            exists  and point your app to its location. The Service Worker is
+            just a JavaScript file so let’s create a sw.js in our public root.
+          </p>
+          <figure class="img-small-width">
+            <img src="/img/sw-location-760w.jpg"
+                 srcset="/img/sw-location-1280w.jpg 1280w,
+                          /img/sw-location-760w.jpg 760w,
+                          /img/sw-location-320w.jpg 320w"
+                 class="restrict-img-height"
+                 alt="Display of mobile homescreen">
+            <figcaption class="img-caption">
+              Create your sw.js file
+            </figcaption>
+          </figure>
+          <p>
+            The location of the service worker defines its scope.
+            We're adding it at the domain root so it will cover the entire app.
+            Now that our Service Worker exists, lets register it.
+          </p>
+          <h5 class="section-header">Step 2: Register your service worker with the App</h5>
+          <p>Add the following code to your page index page.</p>
+          <script src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
+          <p>
+            Let’s unpack this a bit. Because service workers are not yet supported by every
+            major browser *cough* Safari *cough*, you need to make sure the API is
+            available by wrapping the registration in an if statement.
+          </p>
+          <p>
+            The service worker object exists on the browsers navigator object. You pass the
+            register() method the location of the service worker which returns a
+            promise which eventually resolves to a registration object.
+            Let’s add a couple console.log statements to our registration so we
+            know that it was successful.
+          </p>
+          <script src="https://gist.github.com/sfhallahan/82cf4f9c3d2c7736bc82929b81b3fdc8.js"></script>
+          <h5 class="section-header">Step 2: Register your service worker with the App</h5>
+          <p>
+            Depending on your app and user base you may want to register your sw after
+            the page has loaded so that your Service worker set up doesn’t interfere
+            with initial page load. For this reason recommended best practice is to
+            wait for a load event and then register the sw. This is our final
+            registration method.
+          </p>
+          <script src="https://gist.github.com/sfhallahan/1b2c71f4571f918d936081e8c4f61c49.js"></script>
+          <p>
+            You could trust me when I say your service worker is successfully registered,
+            or you could verify yourself. Let’s start up the app and take a look at
+            our shiny new service worker. Open up Chrome Dev tools on your app,
+            under the Application tab select Service Workers. And there it is!
+          </p>
+          <figure class="img-small-width">
+            <img src="/img/registered-sw-760w.jpg"
+                 srcset="/img/registered-sw-1280w.jpg 1280w,
+                          /img/registered-sw-760w.jpg 760w,
+                          /img/registered-sw-320w.jpg 320w"
+                 alt="Browser with Chrome DevTools showing an active service worker">
+            <figcaption class="img-caption">
+              Our active Service Worker in DevTools
+            </figcaption>
+          </figure>
+          <p>
+            Part 1 is complete, great job. In part 2 we will create our cache,
+            intercept fetch requests and serve assets out of the cache.
+          </p>
+      </article>
+      <div class="subscribe-container">
+        <h3 class="subscribe-header">Like this post?</h2>
+        <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
+        <p class="email-octopus-error-message subscribe-subheader"></p>
+        <form method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add" class="email-octopus-form subscribe-form">
+          <input  type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
+          <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
+          <button class="submit-button" type="submit">SUBSCRIBE</button>
+          <div class="email-octopus-form-row-hp" aria-hidden="true">
+            <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
+          </div>
+        </form>
+        <p class="email-octopus-success-message subscribe-subheader"></p>
+      </div>
+      <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1516705651"></script>
+      <link rel="stylesheet" href="https://emailoctopus.com/bundles/emailoctopuslist/css/formEmbed.css?1516705651">
+      <footer class="footer">
+          <p class="footer-text">
+            &copy; 2018, Sean Hallahan
+          </p>
+      </footer>
+  </body>
+</html>
