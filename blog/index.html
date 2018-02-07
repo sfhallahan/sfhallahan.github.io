@@ -14,8 +14,8 @@
     <link href="/css/main.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/main.js"></script>
+    <script async src="/js/jquery-3.2.1.min.js"></script>
+    <script async src="/js/main.js"></script>
   </head>
   <body>
       <header id="header" class="header nav-down">
@@ -42,12 +42,28 @@
       <section class="post-container">
         <h1 class="post-title centered-text">Blog</h1>
         <article class="card">
+          <a href="/blog/2018/02/adding-a-service-worker-to-your-app.html">
+            <img src="/img/add-sw-title-pic-760w.jpg"
+            srcset="/img/add-sw-title-pic-1280w.jpg 1280w, /img/add-sw-title-pic-760w.jpg 760w, /img/add-sw-title-pic-320w.jpg 320w"
+            sizes="(max-width: 700) 100vw, 700px"
+            class="card-img card-img-cover"
+            alt="Lego service worker" />
+            <p class="card-date">February 7, 2018</p>
+            <h3 class="card-title">Adding a Service Worker to Your App</h3>
+            <p class="card-details">In this quick tutorial, I'll start you on the
+              path to making your application offline first. By the end of this post,
+              your application will no longer show users our least favorite (but adorable)
+              dinosaur when they open your app in the bathroom at Starbucks...
+            </p>
+          </a>
+        </article>
+        <article class="card">
           <a href="/blog/2018/01/what-is-a-pwa.html">
             <img src="/img/PWA-1280w.jpg"
-                 srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w"
-                 sizes="(max-width: 700) 100vw, 700px"
-                 class="card-img card-img-cover"
-                 alt="Display of mobile homescreen" />
+            srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w"
+            sizes="(max-width: 700) 100vw, 700px"
+            class="card-img card-img-cover"
+            alt="Display of mobile homescreen" />
             <p class="card-date">January 17, 2018</p>
             <h3 class="card-title">What the heck is a PWA?</h3>
             <p class="card-details">Last week I was lucky enough to receive the
@@ -87,7 +103,7 @@
         </form>
         <p class="email-octopus-success-message subscribe-subheader"></p>
       </div>
-      <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1516705651"></script>
+      <script defer src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1516705651"></script>
       <link rel="stylesheet" href="https://emailoctopus.com/bundles/emailoctopuslist/css/formEmbed.css?1516705651">
 
       <footer class="footer">
