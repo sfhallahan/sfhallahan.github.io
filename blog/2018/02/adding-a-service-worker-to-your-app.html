@@ -40,11 +40,11 @@
           </div>
       </header>
       <article class="post-container">
-          <h1 class="post-title centered-text">Adding a Service Worker to your App</h1>
-          <span class="post-date centered-text">February 6, 2018</span>
+          <h1 class="post-title centered-text">Adding a Service Worker to Your App</h1>
+          <span class="post-date centered-text">February 7, 2018</span>
           <figure class="img-full-width">
-            <img src="/img/PWA.jpg"
-                 srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w"
+            <img src="/img/add-sw-title-pic-760w.jpg"
+                 srcset="/img/add-sw-title-pic-1280w.jpg 1280w, /img/add-sw-title-pic-760w.jpg 760w, /img/add-sw-title-pic-320w.jpg 320w"
                  class="restrict-img-height"
                  alt="Display of mobile homescreen">
           </figure>
@@ -102,19 +102,19 @@
           </p>
           <h5 class="section-header">Step 2: Register your Service Worker </h5>
           <p>Since your Service Worker runs separate from your webpage we need to tell the app that the service worker exists and point to its location. Add the following code to your page index page.</p>
-          <script src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
           <p>
             Let's unpack this a bit. Because service workers are not yet supported by every major browser *cough* Safari *cough*, you need to make sure the API is available by wrapping the registration in an if statement.
           </p>
           <p>
             The service worker object exists on the browsers navigator object. You pass the register() method the location of the service worker which returns a promise which eventually resolves to a registration object. We'll add a couple console.log statements to our registration so we know that it was successful.
           </p>
-          <script src="https://gist.github.com/sfhallahan/82cf4f9c3d2c7736bc82929b81b3fdc8.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/82cf4f9c3d2c7736bc82929b81b3fdc8.js"></script>
           <h5 class="section-header">Step 3: Delay registration until after page load</h5>
           <p>
             Depending on your app and user base you may want to register your sw after the page has loaded so that your Service worker set up doesn't interfere with initial page load. For this reason recommended best practice is to wait for a load event and then register the sw. This is our final registration method.
           </p>
-          <script src="https://gist.github.com/sfhallahan/1b2c71f4571f918d936081e8c4f61c49.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/1b2c71f4571f918d936081e8c4f61c49.js"></script>
           <p>
             You could trust me when I say your service worker is successfully registered, or you could verify yourself. Let's start up the app and take a look at our shiny new service worker. Open up Chrome Dev tools on your app, under the Application tab select Service Workers. And there it is!
           </p>
@@ -135,7 +135,7 @@
           <p>
             In your sw.js file we'll start by defining the cache name and creating an array of resources we want to cache. The root html file and fonts is a good place to start.
           </p>
-          <script src="https://gist.github.com/sfhallahan/16a23e315e10a1f7793a8efc15ed5a78.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/16a23e315e10a1f7793a8efc15ed5a78.js"></script>
           <p>
             The dadJokes app is a React app that uses uses webpack to bundle, which means my entry js file will have a hash in the name. You can't use wildcard when identifying resources to cache so we'll be using the webpack-manifest-plugin to create a json file with the hashed resource names. We can retrieve the json file during the service worker install to dynamically add the hashed resource names we want to cache.
           </p>
@@ -143,21 +143,20 @@
             For those of you using the demo app, I've included the dependencies and webpack config updates for you. If you are following along on your own, set up is simple.
           </p>
           <p>
-            Install webpack-manifest-plugin: npm install --save webpack-manifest-plugin
+            Install webpack-manifest-plugin by running the following command in your terminal at the project root.
           </p>
+          <script defer src="https://gist.github.com/sfhallahan/bb1abec9b41e076801bccebf4210542c.js"></script>
           <p>
-            Import the plugin in your webpack.config file: const ManifestPlugin = require('webpack-manifest-plugin');
+            Import the plugin in your webpack.config file and add it to the plugins array.
           </p>
-          <p>
-            Add the following to your plugins array of your webpack config:   new ManifestPlugin({ fileName: 'asset-manifest.json' }),
-          </p>
+          <script defer src="https://gist.github.com/sfhallahan/41be41be4e77a0068f0844f893a8ecff.js"></script>
           <p>
             Run the dev server and you should be able to see the asset-manifest.json at localhost:3000/asset-manifest.json
           </p>
           <p>
             Now that we have the compiled asset names available, we'll create a method to fetch and add the compiled names to our assets array.
           </p>
-          <script src="https://gist.github.com/sfhallahan/5722d67f5475a8a6cc72a344739a7e41.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/5722d67f5475a8a6cc72a344739a7e41.js"></script>
           <h5 class="section-header">Step 5: Add the assets to the Cache on service worker install</h5>
           <p>
             The Service Worker API provides us with distinct lifecycle events that we can hook into and use to control Service Worker behavior. For the purposes of this post we will focus on the install event. Service Worker lifecycle events are a powerful tool that are definitely worth reading up on. Jake Archibald's <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle">article on the topic</a> is an excellent read.
@@ -165,7 +164,7 @@
           <p>
             Let's take a look at our install listener and break it down.
           </p>
-          <script src="https://gist.github.com/sfhallahan/34df00db7825f754f1beb270b1e0e2ca.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/34df00db7825f754f1beb270b1e0e2ca.js"></script>
           <p>
             When an install event is triggered we're going to use the .waitUntil() method to hold the SW in the installing phase until we complete all the install tasks. First we're creating a cache using caches.open() and passing it the cache name. This returns a promise that resolves to the cache. Then we call our getAssetsFromManifest() method to build our full array of Urls to cache. Once resolved we pass the array to the.addAll() method on our new cache. That's it!
           </p>
@@ -174,10 +173,10 @@
             Let's check it out in Dev tools.
           </p>
           <figure class="img-small-width">
-            <img src="/img/cached-urls-760w.png"
-                 srcset="/img/cached-urls-1280w.png 1280w,
-                          /img/cached-urls-760w.png 760w,
-                          /img/cached-urls-320w.png 320w"
+            <img src="/img/cached-urls-760w.jpg"
+                 srcset="/img/cached-urls-1280w.jpg 1280w,
+                          /img/cached-urls-760w.jpg 760w,
+                          /img/cached-urls-320w.jpg 320w"
                  alt="Browser with Chrome DevTools showing an active service worker">
             <figcaption class="img-caption">
               Our cached urls showing up in DevTools
@@ -190,7 +189,7 @@
           <p>
             In order to intercept the network requests, we need to add a event listener on the service worker for the fetch event.
           </p>
-          <script src="https://gist.github.com/sfhallahan/b1d2f6590a0c2cb0a14073cb865f2047.js"></script>
+          <script defer src="https://gist.github.com/sfhallahan/b1d2f6590a0c2cb0a14073cb865f2047.js"></script>
           <p>
             Take a look in your console and you can see the request being logged. We now have the request in the palm of our hands, let's make it serve from the cache. We'll use caches.match() to see if the we've cached a response for that request. If not, we'll forward the request along to the network using fetch.
           </p>
@@ -199,10 +198,10 @@
             To test it all out we can use Chrome DevTools to simulate offline.
           </p>
           <figure class="img-small-width">
-            <img src="/img/DevTools-offline-option-760w.png"
-                 srcset="/img/DevTools-offline-option-1280w.png 1280w,
-                          /img/DevTools-offline-option-760w.png 760w,
-                          /img/DevTools-offline-option-320w.png 320w"
+            <img src="/img/DevTools-offline-option-760w.jpg"
+                 srcset="/img/DevTools-offline-option-1280w.jpg 1280w,
+                          /img/DevTools-offline-option-760w.jpg 760w,
+                          /img/DevTools-offline-option-320w.jpg 320w"
                  alt="Browser with Chrome DevTools showing an active service worker">
             <figcaption class="img-caption">
               Click the offline option and refresh your app.
@@ -219,14 +218,14 @@
               </figcaption>
             </figure>
             <figure>
-              <img src="/img/sw-offlinepng" alt="Application skeleton" />
+              <img src="/img/sw-offline.png" alt="Application skeleton" />
               <figcaption class="img-caption">
                 After!
               </figcaption>
             </figure>
           </div>
           <p>
-            Not bad at all
+            Not bad at all.
           </p>
           <h5 class="section-header">What we have accomplished</h5>
           <p>
@@ -253,7 +252,7 @@
         </form>
         <p class="email-octopus-success-message subscribe-subheader"></p>
       </div>
-      <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1516705651"></script>
+      <script defer src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1516705651"></script>
       <link rel="stylesheet" href="https://emailoctopus.com/bundles/emailoctopuslist/css/formEmbed.css?1516705651">
       <footer class="footer">
           <p class="footer-text">
