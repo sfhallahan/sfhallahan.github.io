@@ -1,20 +1,22 @@
 // open and close navbar for mobile
-let isOpen = false;
+var isOpen = false;
 
 function closeNav() {
   $("#nav-container").removeClass("open").addClass("closed");
   $("#toggle-navigation").removeClass("open").addClass("closed");
+  $("#toggle-navigation").attr("aria-expanded", "false");
   isOpen = false;
 }
 
 function openNav() {
   $("#nav-container").removeClass("closed").addClass("open");
   $("#toggle-navigation").removeClass("closed").addClass("open");
+  $("#toggle-navigation").attr("aria-expanded", "true");
   isOpen = true;
 }
 
 $(document).ready(function () {
-  $("#toggle-navigation").click(() => {
+  $("#toggle-navigation").click(function() {
     isOpen == true ? closeNav() : openNav();
   });
 });
@@ -22,10 +24,10 @@ $(document).ready(function () {
 
 // Hide Header on on scroll down
 
-let didScroll;
-let lastScrollTop = 0;
-const delta = 5;
-const navbarHeight = 98; //$('header').outerHeight();
+var didScroll;
+var lastScrollTop = 0;
+var delta = 5;
+var navbarHeight = 98; //$('header').outerHeight();
 
 $(window).scroll(function(event){
     didScroll = true;

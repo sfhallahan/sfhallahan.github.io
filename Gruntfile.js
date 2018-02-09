@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     /* Clear out the img directory if it exists */
     clean: {
       dev: {
-        src: ['img/*.{gif,jpg,png,svg}']
+        src: ['img/*.{gif,jpg,png,svg}', 'js/*.js', 'css/*.css']
       }
     },
 
@@ -54,12 +54,31 @@ module.exports = function(grunt) {
         }]
       },
     },
+    uglify: {
+      my_target: {
+        files: {
+          'js/main.min.js': ['js/js_src/jquery-3.2.1.min.js', 'js/js_src/main.js']
+        }
+      }
+    },
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'css/css_src',
+          src: ['*.css'],
+          dest: 'css',
+          ext: '.min.css'
+        }]
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-mkdir');
-  grunt.registerTask('default', ['clean', 'copy', 'responsive_images']);
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.registerTask('default', ['clean', 'copy', 'responsive_images', 'uglify', 'cssmin']);
 
 };
