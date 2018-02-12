@@ -57,7 +57,7 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'js/main.min.js': ['js/js_src/jquery-3.2.1.min.js', 'js/js_src/main.js']
+          'js/main.min.js': ['js/js_src/Subscribe.js', 'js/js_src/NavBar.js','js/js_src/main.js']
         }
       }
     },

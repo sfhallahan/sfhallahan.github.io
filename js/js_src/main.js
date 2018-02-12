@@ -1,59 +1,48 @@
 // open and close navbar for mobile
-var isOpen = false;
-
-function closeNav() {
-  $("#nav-container").removeClass("open").addClass("closed");
-  $("#toggle-navigation").removeClass("open").addClass("closed");
-  $("#toggle-navigation").attr("aria-expanded", "false");
-  isOpen = false;
-}
-
-function openNav() {
-  $("#nav-container").removeClass("closed").addClass("open");
-  $("#toggle-navigation").removeClass("closed").addClass("open");
-  $("#toggle-navigation").attr("aria-expanded", "true");
-  isOpen = true;
-}
-
-$(document).ready(function () {
-  $("#toggle-navigation").click(function() {
-    isOpen == true ? closeNav() : openNav();
-  });
-});
-
-
-// Hide Header on on scroll down
-
 var didScroll;
-var lastScrollTop = 0;
 var delta = 5;
-var navbarHeight = 98; //$('header').outerHeight();
+var navbarHeight = 98;
 
-$(window).scroll(function(event){
+window.onscroll = function(event) {
     didScroll = true;
-});
+};
 
-setInterval(function() {
+document.addEventListener("DOMContentLoaded", function() {
+  var navBar = new NavBar(navbarHeight, delta);
+
+  // Mobile navigation
+  var toggleNavigationBtn = document.getElementById('toggle-navigation');
+  toggleNavigationBtn.onclick = function() {
+    navBar.isOpen === true ? navBar.closeNav() : navBar.openNav()
+  }
+
+  // Nav bar up on scroll
+  setInterval(function() {
     if (didScroll) {
-        hasScrolled();
-        didScroll = false;
+      navBar.handleScroll();
+      didScroll = false;
     }
-}, 250);
+  }, 250);
 
-function hasScrolled() {
-    var st = $(this).scrollTop();
+  // Replace Email Octopus jQuery with vanilla js
+  var subscribeForm = document.getElementById('subscribe-form');
+  var emailAddress = document.getElementById('email');
+  var errorMsg = document.getElementById('error-message');
+  var subscribe = new Subscribe();
 
-    if(Math.abs(lastScrollTop - st) <= delta)
-        return;
-
-    if (st > lastScrollTop && st > navbarHeight){
-        $('header').removeClass('nav-down').addClass('nav-up');
-        closeNav();
+  // Subscribe Form
+  subscribeForm.onsubmit = function(e) {
+    e.preventDefault()
+    errorMsg.innerHTML = "";
+    if(subscribe.isBotPost(subscribeForm)) {
+      errorMsg.innerHTML = subscribe.botSubmissionErrorMessage;
+    } else if(emailAddress.value.trim().length === 0) {
+      errorMsg.innerHTML = subscribe.missingEmailAddressMessage;
+    } else if(!subscribe.basicValidateEmail(emailAddress.value)) {
+      errorMsg.innerHTML = subscribe.invalidEmailAddressMessage;
     } else {
-        if(st + $(window).height() < $(document).height()) {
-          $('header').removeClass('nav-up').addClass('nav-down');
-        }
+      subscribe.formSubmit(subscribeForm, subscribe);
     }
-
-    lastScrollTop = st;
-}
+    return false;
+  }
+});
