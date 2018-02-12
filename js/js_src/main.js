@@ -7,60 +7,42 @@ window.onscroll = function(event) {
     didScroll = true;
 };
 
-function NavBar() {
-  this.isOpen = false;
-  this.navContainer = document.getElementById('nav-container');
-  this.toggleNavigationBtn = document.getElementById('toggle-navigation');
-  this.header = document.getElementById('header');
-  this.lastScrollTop = 0;
-  console.log('toggle nav created')
-}
-
-NavBar.prototype.closeNav = function() {
-  this.navContainer.classList.replace('open', 'closed');
-  this.toggleNavigationBtn.classList.replace('open', 'closed');
-  this.toggleNavigationBtn.setAttribute('aria-expanded', 'false');
-  this.isOpen = false;
-}
-
-NavBar.prototype.openNav = function() {
-  this.navContainer.classList.replace('closed', 'open');
-  this.toggleNavigationBtn.classList.replace('closed', 'open');
-  this.toggleNavigationBtn.setAttribute('aria-expanded', 'true');
-  this.isOpen = true;
-}
-
-NavBar.prototype.handleScroll = function() {
-  var st = window.scrollY;
-
-  if(Math.abs(this.lastScrollTop - st) <= delta)
-      return;
-
-  if (st > this.lastScrollTop && st > navbarHeight){
-      this.header.classList.replace('nav-down', 'nav-up');
-      this.closeNav();
-  } else {
-      if(st + window.innerHeight < document.body.clientHeight) {
-        this.header.classList.replace('nav-up', 'nav-down');
-      }
-  }
-  this.lastScrollTop = st;
-}
-
-
 document.addEventListener("DOMContentLoaded", function() {
-  var navBar = new NavBar();
-  var toggleNavigationBtn = document.getElementById('toggle-navigation');
+  var navBar = new NavBar(navbarHeight, delta);
 
+  // Mobile navigation
+  var toggleNavigationBtn = document.getElementById('toggle-navigation');
   toggleNavigationBtn.onclick = function() {
-    console.log('in click handler')
     navBar.isOpen === true ? navBar.closeNav() : navBar.openNav()
   }
 
+  // Nav bar up on scroll
   setInterval(function() {
-      if (didScroll) {
-          navBar.handleScroll();
-          didScroll = false;
-      }
-    }, 250);
+    if (didScroll) {
+      navBar.handleScroll();
+      didScroll = false;
+    }
+  }, 250);
+
+  // Replace Email Octopus jQuery with vanilla js
+  var subscribeForm = document.getElementById('subscribe-form');
+  var emailAddress = document.getElementById('email');
+  var errorMsg = document.getElementById('error-message');
+  var subscribe = new Subscribe();
+
+  // Subscribe Form
+  subscribeForm.onsubmit = function(e) {
+    e.preventDefault()
+    errorMsg.innerHTML = "";
+    if(subscribe.isBotPost(subscribeForm)) {
+      errorMsg.innerHTML = subscribe.botSubmissionErrorMessage;
+    } else if(emailAddress.value.trim().length === 0) {
+      errorMsg.innerHTML = subscribe.missingEmailAddressMessage;
+    } else if(!subscribe.basicValidateEmail(emailAddress.value)) {
+      errorMsg.innerHTML = subscribe.invalidEmailAddressMessage;
+    } else {
+      subscribe.formSubmit(subscribeForm, subscribe);
+    }
+    return false;
+  }
 });
