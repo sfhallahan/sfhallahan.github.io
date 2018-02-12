@@ -19,8 +19,8 @@
     border-color: rgba(0, 0, 0, 0.19);
   }
   .nav-container.closed {
-    display: none;
     height: 0;
+    display: none;
   }
 
   .nav-container.open {
@@ -33,9 +33,6 @@
     margin: 12px 24px 0 0;
     padding: 0;
     font-size: 24px;
-  }
-  #toggle-navigation.open {
-    color: #3BCABD;
   }
 
   #toggle-navigation.closed {
