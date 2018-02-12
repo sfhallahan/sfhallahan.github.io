@@ -111,6 +111,11 @@ input::placeholder {
   color: #3BCABD;
 }
 
+.svg-icon:hover {
+  fill: #3BCABD;
+}
+
+
 .post-container > * {
   grid-column: 4;
 }
