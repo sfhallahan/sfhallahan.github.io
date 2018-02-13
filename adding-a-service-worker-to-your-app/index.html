@@ -94,7 +94,7 @@
           </p>
           <h5 class="section-header">Step 0: Setup the demo app (optional)</h5>
           <p>
-            For this example I will be working off a little React web app that I built (demo). It uses the icanhazdadjoke api to give users the ability to view and search the corniest dad jokes around. If you want to follow along, read the instructions to setup the project here, or even better, you can add a service worker to a web app you've built.
+            For this example I will be working off a little React web app that I built (<a href="https://infallible-goodall-c6eea5.netlify.com/" class="hyperlink">demo</a>). It uses the icanhazdadjoke api to give users the ability to view and search the corniest dad jokes around. If you want to follow along, read the setup instructions on the <a href="https://github.com/sfhallahan/dad-jokes-pwa" class="hyperlink">project ReadMe</a>, or even better, you can add a service worker to a web app you've built.
           </p>
           <h5 class="section-header">Step 1: Create the Service Worker File</h5>
           <p>
@@ -115,7 +115,7 @@
             The location of the service worker is important as it defines its scope. We're adding it at the domain root so it will cover the entire app.
           </p>
           <h5 class="section-header">Step 2: Register your Service Worker </h5>
-          <p>Since your Service Worker runs separate from your webpage we need to tell the app that the service worker exists and point to its location. Add the following code to your page index page.</p>
+          <p>Since your Service Worker runs separate from your webpage we need to tell the app that the service worker exists and point to its location. Add the following code to your apps index page (in the demo project its src/index.js).</p>
           <script src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
           <p>
             Let's unpack this a bit. Because service workers are not yet supported by every major browser *cough* Safari *cough*, you need to make sure the API is available by wrapping the registration in an if statement.
