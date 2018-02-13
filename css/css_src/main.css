@@ -173,6 +173,9 @@ input::placeholder {
   letter-spacing: -0.03em;
 }
 
+.first-card {
+  margin-top: 8px;
+}
 
 /* Blog post formatting */
 .post-date {
