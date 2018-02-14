@@ -363,3 +363,53 @@ input::placeholder {
 .submit-button:focus {
   outline: none;
 }
+
+@supports (-ms-ime-align:auto) {
+  figure.about-me-img {
+    margin: 18px auto;
+  }
+
+  p {
+    max-width: 700px;
+    margin: 8px auto;
+  }
+
+  article.post-container, article.card {
+    max-width: 700px;
+    margin: 18px auto;
+  }
+
+   figure.img-small-width {
+     width: 100%;
+     text-align: center;
+   }
+
+   .post-date {
+     display: none;
+   }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  figure.about-me-img {
+    margin: 18px auto;
+  }
+
+  p {
+    max-width: 700px;
+    margin: 8px auto;
+  }
+
+  article.post-container, article.card {
+    max-width: 700px;
+    margin: 18px auto;
+  }
+
+   figure.img-small-width {
+     width: 100%;
+     text-align: center;
+   }
+
+   .post-date {
+     display: none;
+   }
+}
