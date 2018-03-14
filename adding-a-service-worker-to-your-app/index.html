@@ -1,275 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-102583605-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <title>Adding a Service Worker to your App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Tutorial on adding a service worker to your web application. Part 1 Registering your Service Worker">
-    <meta charset="UTF-8">
-    <link href="/css/main.min.css" rel="stylesheet" />
-    <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)"/>
-    <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
-    <script async src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-    <script src="/js/main.min.js"></script>
-  </head>
-  <body>
-    <header id="header" class="header nav-down">
-        <div class="site-title-container">
-          <div id="site-title"><a href="/">Sean Hallahan</a></div>
-          <span id="site-subtitle">Full-stack web developer</span>
-        </div>
-        <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
-          <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/></svg>
 
-        </button>
-        <div class="nav-container closed" id="nav-container">
-          <ul class="nav-options">
-            <li class="nav-item nav-active"><a href="/">BLOG</a></li>
-            <li class="nav-item"><a href="/about">ABOUT</a></li>
-            <li class="nav-item"><a href="/projects">PROJECTS</a></li>
-          </ul>
-          <ul class="social-options">
-            <li class="social-icon">
-              <a href="https://twitter.com/seanhallahan1">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-              </a>
-            </li>
-            <li class="social-icon">
-              <a href="https://linkedin.com/in/sean-hallahan-34a041142">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-              </a>
-            </li>
-            <li class="social-icon">
-              <a href="https://github.com/sfhallahan">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"/></svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-    </header>
-      <article class="post-container">
-          <h1 class="post-title centered-text">Adding a Service Worker to Your App</h1>
-          <span class="post-date centered-text">February 7, 2018</span>
-          <figure class="img-full-width">
-            <img src="/img/add-sw-title-pic-760w.jpg"
-                 srcset="/img/add-sw-title-pic-1280w.jpg 1280w, /img/add-sw-title-pic-760w.jpg 760w, /img/add-sw-title-pic-320w.jpg 320w"
-                 class="restrict-img-height"
-                 alt="Display of mobile homescreen">
-          </figure>
-          <p>
-            In this quick tutorial, I'll start you on the path to making your application offline first. By the end of this post, your application will no longer show users our least favorite (but adorable) dinosaur when they open your app in the bathroom at Starbucks.
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/offline-dino-760w.jpg"
-                 srcset="/img/offline-dino-1280w.jpg 1280w,
-                          /img/offline-dino-760w.jpg 760w,
-                          /img/offline-dino-320w.jpg 320w"
-                 class="restrict-img-height"
-                 alt="Chrome browser with no internet connection">
-            <figcaption class="img-caption">
-              Dreaded Dino
-            </figcaption>
-          </figure>
-          <p>
-            Instead they'll see your apps landing page. We'll be accomplishing this by setting up my new favorite web worker, the service worker.
-          </p>
-          <h5 class="section-header">What is a Service Worker?</h5>
-          <p>
-            A service worker is a JavaScript worker that gives web developers the ability to provide their users with native-like experience on the mobile web. They are the workhorse behind Progressive Web Apps (which I wrote about <a class="hyperlink" href="/blog/2018/01/what-is-a-pwa.html">here</a>)
-            and are opening the door to mobile functionality like push notifications, background sync and an offline-first experience. Service workers help achieve this connection independent functionality by acting as a network proxy,  intercepting and manipulating network requests and responses.
-          </p>
-          <h5 class="section-header">Why do you want one?</h5>
-          <p>
-            Control. With this tool you are the master of your application, no longer at the mercy of poor network connectivity. Your users get the experience you worked so hard to deliver, no matter where they are trying to access it from.
-          </p>
-          <h5 class="section-header">Adding a service worker to your app</h5>
-          <p>
-            Alright, you are convinced, now let's get to the good stuff. We are going to add a Service Worker to our app, create a cache and then intercept fetch requests to serve the content from the cache.
-          </p>
-          <h5 class="section-header">Step 0: Setup the demo app (optional)</h5>
-          <p>
-            For this example I will be working off a little React web app that I built (<a href="https://infallible-goodall-c6eea5.netlify.com/" class="hyperlink">demo</a>). It uses the icanhazdadjoke api to give users the ability to view and search the corniest dad jokes around. If you want to follow along, read the setup instructions on the <a href="https://github.com/sfhallahan/dad-jokes-pwa" class="hyperlink">project ReadMe</a>, or even better, you can add a service worker to a web app you've built.
-          </p>
-          <h5 class="section-header">Step 1: Create the Service Worker File</h5>
-          <p>
-            First things first, let's add the service worker file. I've named my sw.js and added it to my public root (‘/').
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/sw-location-760w.jpg"
-                 srcset="/img/sw-location-1280w.jpg 1280w,
-                          /img/sw-location-760w.jpg 760w,
-                          /img/sw-location-320w.jpg 320w"
-                 class="restrict-img-height"
-                 alt="Display of mobile homescreen">
-            <figcaption class="img-caption">
-              Create your sw.js file
-            </figcaption>
-          </figure>
-          <p>
-            The location of the service worker is important as it defines its scope. We're adding it at the domain root so it will cover the entire app.
-          </p>
-          <h5 class="section-header">Step 2: Register your Service Worker </h5>
-          <p>Since your Service Worker runs separate from your webpage we need to tell the app that the service worker exists and point to its location. Add the following code to your apps index page (in the demo project its src/index.js).</p>
-          <script src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
-          <p>
-            Let's unpack this a bit. Because service workers are not yet supported by every major browser *cough* Safari *cough*, you need to make sure the API is available by wrapping the registration in an if statement.
-          </p>
-          <p>
-            The service worker object exists on the browsers navigator object. You pass the register() method the location of the service worker which returns a promise which eventually resolves to a registration object. We'll add a couple console.log statements to our registration so we know that it was successful.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/82cf4f9c3d2c7736bc82929b81b3fdc8.js"></script>
-          <h5 class="section-header">Step 3: Delay registration until after page load</h5>
-          <p>
-            Depending on your app and user base you may want to register your sw after the page has loaded so that your Service worker set up doesn't interfere with initial page load. For this reason recommended best practice is to wait for a load event and then register the sw. This is our final registration method.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/1b2c71f4571f918d936081e8c4f61c49.js"></script>
-          <p>
-            You could trust me when I say your service worker is successfully registered, or you could verify yourself. Let's start up the app and take a look at our shiny new service worker. Open up Chrome Dev tools on your app, under the Application tab select Service Workers. And there it is!
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/registered-sw-760w.jpg"
-                 srcset="/img/registered-sw-1280w.jpg 1280w,
-                          /img/registered-sw-760w.jpg 760w,
-                          /img/registered-sw-320w.jpg 320w"
-                 alt="Browser with Chrome DevTools showing an active service worker">
-            <figcaption class="img-caption">
-              Our active Service Worker in DevTools
-            </figcaption>
-          </figure>
-          <h5 class="section-header">Step 4: Define the list of assets to cache</h5>
-          <p>
-            Our service worker is now registered but it's not really doing anything. Let's change that by creating a cache to store our key assets, intercepting network requests and serving our assets from the cache.
-          </p>
-          <p>
-            In your sw.js file we'll start by defining the cache name and creating an array of resources we want to cache. The root html file and fonts is a good place to start.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/16a23e315e10a1f7793a8efc15ed5a78.js"></script>
-          <p>
-            The dadJokes app is a React app that uses uses webpack to bundle, which means my entry js file will have a hash in the name. You can't use wildcard when identifying resources to cache so we'll be using the webpack-manifest-plugin to create a json file with the hashed resource names. We can retrieve the json file during the service worker install to dynamically add the hashed resource names we want to cache.
-          </p>
-          <p>
-            For those of you using the demo app, I've included the dependencies and webpack config updates for you. If you are following along on your own, set up is simple.
-          </p>
-          <p>
-            Install webpack-manifest-plugin by running the following command in your terminal at the project root.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/bb1abec9b41e076801bccebf4210542c.js"></script>
-          <p>
-            Import the plugin in your webpack.config file and add it to the plugins array.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/41be41be4e77a0068f0844f893a8ecff.js"></script>
-          <p>
-            Run the dev server and you should be able to see the asset-manifest.json at localhost:3000/asset-manifest.json
-          </p>
-          <p>
-            Now that we have the compiled asset names available, we'll create a method to fetch and add the compiled names to our assets array.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/5722d67f5475a8a6cc72a344739a7e41.js"></script>
-          <h5 class="section-header">Step 5: Add the assets to the Cache on service worker install</h5>
-          <p>
-            The Service Worker API provides us with distinct lifecycle events that we can hook into and use to control Service Worker behavior. For the purposes of this post we will focus on the install event. Service Worker lifecycle events are a powerful tool that are definitely worth reading up on. Jake Archibald's <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle">article on the topic</a> is an excellent read.
-          </p>
-          <p>
-            Let's take a look at our install listener and break it down.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/34df00db7825f754f1beb270b1e0e2ca.js"></script>
-          <p>
-            When an install event is triggered we're going to use the .waitUntil() method to hold the SW in the installing phase until we complete all the install tasks. First we're creating a cache using caches.open() and passing it the cache name. This returns a promise that resolves to the cache. Then we call our getAssetsFromManifest() method to build our full array of Urls to cache. Once resolved we pass the array to the.addAll() method on our new cache. That's it!
-          </p>
-          <p>
-            Until we set up our update strategy we're going to finish install by use skipWaiting() to immediately activate the Service Worker when a new version appears
-            Let's check it out in Dev tools.
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/cached-urls-760w.jpg"
-                 srcset="/img/cached-urls-1280w.jpg 1280w,
-                          /img/cached-urls-760w.jpg 760w,
-                          /img/cached-urls-320w.jpg 320w"
-                 alt="Browser with Chrome DevTools showing an active service worker">
-            <figcaption class="img-caption">
-              Our cached urls showing up in DevTools
-            </figcaption>
-          </figure>
-          <p>
-            Looks good, almost done. Let's serve that content up!
-          </p>
-          <h5 class="section-header">Step 6: Serve cached content</h5>
-          <p>
-            In order to intercept the network requests, we need to add a event listener on the service worker for the fetch event.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/b1d2f6590a0c2cb0a14073cb865f2047.js"></script>
-          <p>
-            Take a look in your console and you can see the request being logged. We now have the request in the palm of our hands, let's make it serve from the cache. We'll use caches.match() to see if the we've cached a response for that request. If not, we'll forward the request along to the network using fetch.
-          </p>
-          <script src="https://gist.github.com/sfhallahan/94c2694bd5cf08d36cc8d8579f068c58.js"></script>
-          <p>
-            To test it all out we can use Chrome DevTools to simulate offline.
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/DevTools-offline-option-760w.jpg"
-                 srcset="/img/DevTools-offline-option-1280w.jpg 1280w,
-                          /img/DevTools-offline-option-760w.jpg 760w,
-                          /img/DevTools-offline-option-320w.jpg 320w"
-                 alt="Browser with Chrome DevTools showing an active service worker">
-            <figcaption class="img-caption">
-              Click the offline option and refresh your app.
-            </figcaption>
-          </figure>
-          <p>
-            If you refresh the page you should still see the app skeleton! When we compare the before and after we can see what a difference our little worker has made.
-          </p>
-          <div class="side-by-side">
-            <figure>
-              <img src="/img/no-sw-offline.png" alt="No internet connection message" />
-              <figcaption class="img-caption">
-                Before...
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="/img/sw-offline.png" alt="Application skeleton" />
-              <figcaption class="img-caption">
-                After!
-              </figcaption>
-            </figure>
-          </div>
-          <p>
-            Not bad at all.
-          </p>
-          <h5 class="section-header">What we have accomplished</h5>
-          <p>
-            That's it! You've done a lot, so let's recap. You created a service worker and registered it with your application. You hooked into the service worker's install event and created a cache to store the critical assets for your app. Last but not least you hijacked your application's fetch requests and returned any matches from the cache.
-          </p>
-          <p>
-            Congrats, you’re well on your way to making your application run “offline-first.” In my next post I’ll show you how you can use the service worker to push app updates to your users in a way that won’t piss…make them angry…
-          </p>
-          <p>
-            If you’re interested, enter your email below and I’ll shoot you a notification when it’s out!
-          </p>
-      </article>
-      <div class="subscribe-container">
-        <h3 class="subscribe-header">Like this post?</h2>
-        <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
-        <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
-        <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add" class="email-octopus-form subscribe-form">
-          <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
-          <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
-          <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
-          <div class="email-octopus-form-row-hp" aria-hidden="true">
-            <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
-          </div>
-        </form>
-        <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+<head>
+  <script>
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+    ga('create', 'UA-102583605-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  <title>Adding a Service Worker to your App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Tutorial on adding a service worker to your web application. Part 1 Registering your Service Worker">
+  <meta charset="UTF-8">
+  <link href="/css/main.min.css" rel="stylesheet" />
+  <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)" />
+  <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+  <script async src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+  <script src="/js/main.min.js"></script>
+</head>
+
+<body>
+  <header id="header" class="header nav-down">
+    <div class="site-title-container">
+      <div id="site-title">
+        <a href="/">Sean Hallahan</a>
       </div>
-      <footer class="footer">
-          <p class="footer-text">
-            &copy; 2018, Sean Hallahan
-          </p>
-      </footer>
-  </body>
+      <span id="site-subtitle">Full-stack web developer</span>
+    </div>
+    <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
+      <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+        <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"
+        />
+      </svg>
+
+    </button>
+    <div class="nav-container closed" id="nav-container">
+      <ul class="nav-options">
+        <li class="nav-item nav-active">
+          <a href="/">BLOG</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about">ABOUT</a>
+        </li>
+        <li class="nav-item">
+          <a href="/projects">PROJECTS</a>
+        </li>
+      </ul>
+      <ul class="social-options">
+        <li class="social-icon">
+          <a href="https://twitter.com/seanhallahan1">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://linkedin.com/in/sean-hallahan-34a041142">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://github.com/sfhallahan">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <article class="post-container">
+    <h1 class="post-title centered-text">Adding a Service Worker to Your App</h1>
+    <span class="post-date centered-text">February 7, 2018</span>
+    <figure class="img-full-width">
+      <img src="/img/add-sw-title-pic-760w.jpg" srcset="/img/add-sw-title-pic-1280w.jpg 1280w, /img/add-sw-title-pic-760w.jpg 760w, /img/add-sw-title-pic-320w.jpg 320w"
+        class="restrict-img-height" alt="Display of mobile homescreen">
+    </figure>
+    <p>
+      In this quick tutorial, I'll start you on the path to making your application offline first. By the end of this post, your
+      application will no longer show users our least favorite (but adorable) dinosaur when they open your app in the bathroom
+      at Starbucks.
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/offline-dino-760w.jpg" srcset="/img/offline-dino-1280w.jpg 1280w,
+                          /img/offline-dino-760w.jpg 760w,
+                          /img/offline-dino-320w.jpg 320w" class="restrict-img-height" alt="Chrome browser with no internet connection">
+      <figcaption class="img-caption">
+        Dreaded Dino
+      </figcaption>
+    </figure>
+    <p>
+      Instead they'll see your apps landing page. We'll be accomplishing this by setting up my new favorite web worker, the service
+      worker.
+    </p>
+    <h5 class="section-header">What is a Service Worker?</h5>
+    <p>
+      A service worker is a JavaScript worker that gives web developers the ability to provide their users with native-like experience
+      on the mobile web. They are the workhorse behind Progressive Web Apps (which I wrote about
+      <a class="hyperlink" href="/what-is-a-pwa/">here</a>) and are opening the door to mobile functionality like push notifications, background sync and an offline-first
+      experience. Service workers help achieve this connection independent functionality by acting as a network proxy, intercepting
+      and manipulating network requests and responses.
+    </p>
+    <h5 class="section-header">Why do you want one?</h5>
+    <p>
+      Control. With this tool you are the master of your application, no longer at the mercy of poor network connectivity. Your
+      users get the experience you worked so hard to deliver, no matter where they are trying to access it from.
+    </p>
+    <h5 class="section-header">Adding a service worker to your app</h5>
+    <p>
+      Alright, you are convinced, now let's get to the good stuff. We are going to add a Service Worker to our app, create a cache
+      and then intercept fetch requests to serve the content from the cache.
+    </p>
+    <h5 class="section-header">Step 0: Setup the demo app (optional)</h5>
+    <p>
+      For this example I will be working off a little React web app that I built (
+      <a href="https://infallible-goodall-c6eea5.netlify.com/" class="hyperlink">demo</a>). It uses the icanhazdadjoke api to give users the ability to view and search the corniest dad jokes around.
+      If you want to follow along, read the setup instructions on the
+      <a href="https://github.com/sfhallahan/dad-jokes-pwa" class="hyperlink">project ReadMe</a>, or even better, you can add a service worker to a web app you've built.
+    </p>
+    <h5 class="section-header">Step 1: Create the Service Worker File</h5>
+    <p>
+      First things first, let's add the service worker file. I've named my sw.js and added it to my public root (‘/').
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/sw-location-760w.jpg" srcset="/img/sw-location-1280w.jpg 1280w,
+                          /img/sw-location-760w.jpg 760w,
+                          /img/sw-location-320w.jpg 320w" class="restrict-img-height" alt="Display of mobile homescreen">
+      <figcaption class="img-caption">
+        Create your sw.js file
+      </figcaption>
+    </figure>
+    <p>
+      The location of the service worker is important as it defines its scope. We're adding it at the domain root so it will cover
+      the entire app.
+    </p>
+    <h5 class="section-header">Step 2: Register your Service Worker </h5>
+    <p>Since your Service Worker runs separate from your webpage we need to tell the app that the service worker exists and
+      point to its location. Add the following code to your apps index page (in the demo project its src/index.js).</p>
+    <script src="https://gist.github.com/sfhallahan/3ac5cad0965e7ada4704e84d7ce19a0e.js"></script>
+    <p>
+      Let's unpack this a bit. Because service workers are not yet supported by every major browser *cough* Safari *cough*, you
+      need to make sure the API is available by wrapping the registration in an if statement.
+    </p>
+    <p>
+      The service worker object exists on the browsers navigator object. You pass the register() method the location of the service
+      worker which returns a promise which eventually resolves to a registration object. We'll add a couple console.log statements
+      to our registration so we know that it was successful.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/82cf4f9c3d2c7736bc82929b81b3fdc8.js"></script>
+    <h5 class="section-header">Step 3: Delay registration until after page load</h5>
+    <p>
+      Depending on your app and user base you may want to register your sw after the page has loaded so that your Service worker
+      set up doesn't interfere with initial page load. For this reason recommended best practice is to wait for a load event
+      and then register the sw. This is our final registration method.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/1b2c71f4571f918d936081e8c4f61c49.js"></script>
+    <p>
+      You could trust me when I say your service worker is successfully registered, or you could verify yourself. Let's start up
+      the app and take a look at our shiny new service worker. Open up Chrome Dev tools on your app, under the Application
+      tab select Service Workers. And there it is!
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/registered-sw-760w.jpg" srcset="/img/registered-sw-1280w.jpg 1280w,
+                          /img/registered-sw-760w.jpg 760w,
+                          /img/registered-sw-320w.jpg 320w" alt="Browser with Chrome DevTools showing an active service worker">
+      <figcaption class="img-caption">
+        Our active Service Worker in DevTools
+      </figcaption>
+    </figure>
+    <h5 class="section-header">Step 4: Define the list of assets to cache</h5>
+    <p>
+      Our service worker is now registered but it's not really doing anything. Let's change that by creating a cache to store our
+      key assets, intercepting network requests and serving our assets from the cache.
+    </p>
+    <p>
+      In your sw.js file we'll start by defining the cache name and creating an array of resources we want to cache. The root html
+      file and fonts is a good place to start.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/16a23e315e10a1f7793a8efc15ed5a78.js"></script>
+    <p>
+      The dadJokes app is a React app that uses uses webpack to bundle, which means my entry js file will have a hash in the name.
+      You can't use wildcard when identifying resources to cache so we'll be using the webpack-manifest-plugin to create
+      a json file with the hashed resource names. We can retrieve the json file during the service worker install to dynamically
+      add the hashed resource names we want to cache.
+    </p>
+    <p>
+      For those of you using the demo app, I've included the dependencies and webpack config updates for you. If you are following
+      along on your own, set up is simple.
+    </p>
+    <p>
+      Install webpack-manifest-plugin by running the following command in your terminal at the project root.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/bb1abec9b41e076801bccebf4210542c.js"></script>
+    <p>
+      Import the plugin in your webpack.config file and add it to the plugins array.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/41be41be4e77a0068f0844f893a8ecff.js"></script>
+    <p>
+      Run the dev server and you should be able to see the asset-manifest.json at localhost:3000/asset-manifest.json
+    </p>
+    <p>
+      Now that we have the compiled asset names available, we'll create a method to fetch and add the compiled names to our assets
+      array.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/5722d67f5475a8a6cc72a344739a7e41.js"></script>
+    <h5 class="section-header">Step 5: Add the assets to the Cache on service worker install</h5>
+    <p>
+      The Service Worker API provides us with distinct lifecycle events that we can hook into and use to control Service Worker
+      behavior. For the purposes of this post we will focus on the install event. Service Worker lifecycle events are a powerful
+      tool that are definitely worth reading up on. Jake Archibald's
+      <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle">article on the topic</a> is an excellent read.
+    </p>
+    <p>
+      Let's take a look at our install listener and break it down.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/34df00db7825f754f1beb270b1e0e2ca.js"></script>
+    <p>
+      When an install event is triggered we're going to use the .waitUntil() method to hold the SW in the installing phase until
+      we complete all the install tasks. First we're creating a cache using caches.open() and passing it the cache name.
+      This returns a promise that resolves to the cache. Then we call our getAssetsFromManifest() method to build our full
+      array of Urls to cache. Once resolved we pass the array to the.addAll() method on our new cache. That's it!
+    </p>
+    <p>
+      Until we set up our update strategy we're going to finish install by use skipWaiting() to immediately activate the Service
+      Worker when a new version appears Let's check it out in Dev tools.
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/cached-urls-760w.jpg" srcset="/img/cached-urls-1280w.jpg 1280w,
+                          /img/cached-urls-760w.jpg 760w,
+                          /img/cached-urls-320w.jpg 320w" alt="Browser with Chrome DevTools showing an active service worker">
+      <figcaption class="img-caption">
+        Our cached urls showing up in DevTools
+      </figcaption>
+    </figure>
+    <p>
+      Looks good, almost done. Let's serve that content up!
+    </p>
+    <h5 class="section-header">Step 6: Serve cached content</h5>
+    <p>
+      In order to intercept the network requests, we need to add a event listener on the service worker for the fetch event.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/b1d2f6590a0c2cb0a14073cb865f2047.js"></script>
+    <p>
+      Take a look in your console and you can see the request being logged. We now have the request in the palm of our hands, let's
+      make it serve from the cache. We'll use caches.match() to see if the we've cached a response for that request. If not,
+      we'll forward the request along to the network using fetch.
+    </p>
+    <script src="https://gist.github.com/sfhallahan/94c2694bd5cf08d36cc8d8579f068c58.js"></script>
+    <p>
+      To test it all out we can use Chrome DevTools to simulate offline.
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/DevTools-offline-option-760w.jpg" srcset="/img/DevTools-offline-option-1280w.jpg 1280w,
+                          /img/DevTools-offline-option-760w.jpg 760w,
+                          /img/DevTools-offline-option-320w.jpg 320w" alt="Browser with Chrome DevTools showing an active service worker">
+      <figcaption class="img-caption">
+        Click the offline option and refresh your app.
+      </figcaption>
+    </figure>
+    <p>
+      If you refresh the page you should still see the app skeleton! When we compare the before and after we can see what a difference
+      our little worker has made.
+    </p>
+    <div class="side-by-side">
+      <figure>
+        <img src="/img/no-sw-offline.png" alt="No internet connection message" />
+        <figcaption class="img-caption">
+          Before...
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="/img/sw-offline.png" alt="Application skeleton" />
+        <figcaption class="img-caption">
+          After!
+        </figcaption>
+      </figure>
+    </div>
+    <p>
+      Not bad at all.
+    </p>
+    <h5 class="section-header">What we have accomplished</h5>
+    <p>
+      That's it! You've done a lot, so let's recap. You created a service worker and registered it with your application. You hooked
+      into the service worker's install event and created a cache to store the critical assets for your app. Last but not
+      least you hijacked your application's fetch requests and returned any matches from the cache.
+    </p>
+    <p>
+      Congrats, you’re well on your way to making your application run “offline-first.” In my next post I’ll show you how you can
+      use the service worker to push app updates to your users in a way that won’t piss…make them angry…
+    </p>
+    <p>
+      If you’re interested, enter your email below and I’ll shoot you a notification when it’s out!
+    </p>
+  </article>
+  <div class="subscribe-container">
+    <h3 class="subscribe-header">Like this post?</h2>
+      <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
+      <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
+      <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add"
+        class="email-octopus-form subscribe-form">
+        <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
+        <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
+        <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
+        <div class="email-octopus-form-row-hp" aria-hidden="true">
+          <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
+        </div>
+      </form>
+      <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+  </div>
+  <footer class="footer">
+    <p class="footer-text">
+      &copy; 2018, Sean Hallahan
+    </p>
+  </footer>
+</body>
+
 </html>
