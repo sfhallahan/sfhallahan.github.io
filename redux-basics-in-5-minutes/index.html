@@ -1,125 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-102583605-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <title>Redux Basics in 5 Minutes or Less - Sean Hallahan</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="A quick overview of redux basics. What it is, why it is useful, and a simple example to get you started">
-    <meta charset="UTF-8">
-    <link href="/css/main.min.css" rel="stylesheet" />
-    <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)"/>
-    <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
-    <script async src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-    <script src="/js/main.min.js"></script>
-  </head>
-  <body>
-      <header id="header" class="header nav-down">
-          <div class="site-title-container">
-            <div id="site-title"><a href="/">Sean Hallahan</a></div>
-            <span id="site-subtitle">Full-stack web developer</span>
-          </div>
-          <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
-            <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/></svg>
 
-          </button>
-          <div class="nav-container closed" id="nav-container">
-            <ul class="nav-options">
-              <li class="nav-item nav-active"><a href="/">BLOG</a></li>
-              <li class="nav-item"><a href="/about">ABOUT</a></li>
-              <li class="nav-item"><a href="/projects">PROJECTS</a></li>
-            </ul>
-            <ul class="social-options">
-              <li class="social-icon">
-                <a href="https://twitter.com/seanhallahan1">
-                  <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-                </a>
-              </li>
-              <li class="social-icon">
-                <a href="https://linkedin.com/in/sean-hallahan-34a041142">
-                  <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-                </a>
-              </li>
-              <li class="social-icon">
-                <a href="https://github.com/sfhallahan">
-                  <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"/></svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-      </header>
-      <article class="post-container">
-          <h1 class="post-title centered-text">Redux Basics in 5 Minutes (or less)</h1>
-          <span class="post-date centered-text">August 11, 2017</span>
-          <figure class="img-small-width">
-            <img class="redux-logo-large" src="/img/redux-logo.svg" alt="the redux logo">
-            <figcaption class="img-caption">
-              Boom, the beautiful Redux logo
-            </figcaption>
-          </figure>
-          <p>If you're using React to build your app, chances are you've heard of
-            Redux. Redux is a "predictable state container for JavaScript apps"
-            based on the Flux design pattern. There are many reasons people are
-            raving about Redux, predictability of outcome, maintainability,
-            server side rendering, the list goes on and on. But you're here to
-            get the 50,000 foot overview so you can chime in at the lunch table
-            tomorrow and impress all your friends.</p>
-          <p>Alright, that didn't count towards the 5 minutes... Ready go!</p>
-          <h3 class="sub-header">Key Concepts</h3>
-          <p><b>State/State Tree - </b>The whole state of your application is represented as a single JavaScript object called the state or State Tree. The state/state tree is READ-ONLY, you cannot write to it. Any time you want to make a change you have to dispatch an action.</p>
-          <p><b>Action - </b>An action is a plain JavaScript object that describes the change. Each action must have a "type" property, this is usually a string (so that it is serializable) and it cannot be undefined. Aside from that one restriction, you can build your action object to contain whatever information you need to define the change. With an action defined, you have the input</p>
-          <p><b>Reducer - </b>Reducers allow you to implement the update logic of your app. A reducer is a pure function <a class="hyperlink" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">(brush up on your understanding of pure functions here)</a> that takes the previous state of the app, an action, and returns the next state. The object returned is a new state object, remember state is immutable.</p>
-          <p><b>Store - </b>The store is how you tie it all together. The store holds current state, lets you dispatch actions, and allows you to specify your reducers. In Redux there is a single store with a single root reducing function. To create a store you simply call the createStore method from Redux and pass it your reducer. The store object has 3 important methods</p>
-          <ol>
-            <li><b>getState() </b> - Gets the current application state</li>
-            <li><b>dispatch(action) </b> - Changes the current application state. Takes the action as an argument and passes it, along with the current state, to the reducer.</li>
-            <li><b>subscribe(function) </b> - Allows functions to subscribe to the changes so that they can react/re-render with the new state</li>
-          </ol>
-          <p>In a simple use case you would have a render method subscribed to the store. That render method would user the .getState() method to make sure it had the latest and greatest state to display on the UI. An event on the UI would call the dispatch method, which would in turn update the state. The render method which is subscribed would be notified of the update, get the new state and re-render.</p>
-          <h3 class="sub-header">Simple example</h3>
-          <p>
-            I believe a code example is worth a thousand words.. so I borrowed
-            the example from the <a class="hyperlink" href="http://redux.js.org/">Redux docs</a> (which I highly recommend going through
-            when you have more than 5 minutes), stripped it down and updated it to ES6 syntax. It's a simple counter app that allows your to increment and decrement the number displayed in the browser. It's just one html file with our Redux JavaScript baked right in. The full source code can be found on <a class="hyperlink" href="https://github.com/sfhallahan/reduxCounterExample">GitHub</a>.
-          </p>
-          <p>To start, here is the html we will be using.</p>
-          <script src="https://gist.github.com/sfhallahan/efd76b7206e42517c5bd84c0aa8273ae.js"></script>
-          <p>Since we are using a single HTML file make sure to include a script tag in the header to add Redux to your app. The src can be found <a class="hyperlink" href="https://unpkg.com/redux@latest/dist/redux.min.js">here</a>.</p>
-          <p>Now on to redux. First we define our simple actions</p>
-          <script src="https://gist.github.com/sfhallahan/0f4b35de62b4902308c86db584277e97.js"></script>
-          <p>Next we need to define our reducer. Remember it needs to take our current state and an action and return a new state object.</p>
-          <script src="https://gist.github.com/sfhallahan/57a6817ba47b0a4473b9902d377657da.js"></script>
-          <p>We need to create our store by calling the Redux createStore method and passing it our reducer.</p>
-          <p>Then we'll render our updates using a… render method. Note how it uses the Redux store getState() method. We're also going to subscribe our render method to the store so that it knows to get the state when a change is made. We're also making an initial call to the render method so that the initial count of 0 displays when you load the page.</p>
-          <script src="https://gist.github.com/sfhallahan/3bc305a9995745ccf2ea3f221657cfc4.js"></script>
-          <p>Last but not least, we need our dispatch our actions when UI events occur. In our case they look like this</p>
-          <script src="https://gist.github.com/sfhallahan/6e19bb84ca54eb163d13205bebffb2d1.js"></script>
-          <p>There you have it, a nice little Redux app to play around with. Hopefully you now have a high level understanding of Redux and can go out there and impress all your friends. If you have any feedback or questions, you can always reach me on my twitter or linkedIn. Just click the icons in the navigation bar.</p>
-      </article>
+<head>
+  <script>
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+    ga('create', 'UA-102583605-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  <title>Redux Basics in 5 Minutes or Less - Sean Hallahan</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A quick overview of redux basics. What it is, why it is useful, and a simple example to get you started">
+  <meta charset="UTF-8">
+  <link href="/css/main.min.css" rel="stylesheet" />
+  <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)" />
+  <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+  <script src="/js/main.min.js"></script>
+</head>
 
-      <div class="subscribe-container">
-        <h3 class="subscribe-header">Like this post?</h2>
-        <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
-        <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
-        <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add" class="email-octopus-form subscribe-form">
-          <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
-          <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
-          <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
-          <div class="email-octopus-form-row-hp" aria-hidden="true">
-            <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
-          </div>
-        </form>
-        <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+<body>
+  <header id="header" class="header nav-down">
+    <div class="site-title-container">
+      <div id="site-title">
+        <a href="/">Sean Hallahan</a>
       </div>
-      <footer class="footer">
-          <p class="footer-text">
-            &copy; 2018, Sean Hallahan
-          </p>
-      </footer>
-  </body>
+      <span id="site-subtitle">Full-stack web developer</span>
+    </div>
+    <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
+      <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+        <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"
+        />
+      </svg>
+
+    </button>
+    <div class="nav-container closed" id="nav-container">
+      <ul class="nav-options">
+        <li class="nav-item nav-active">
+          <a href="/">BLOG</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about">ABOUT</a>
+        </li>
+        <li class="nav-item">
+          <a href="/projects">PROJECTS</a>
+        </li>
+      </ul>
+      <ul class="social-options">
+        <li class="social-icon">
+          <a href="https://twitter.com/seanhallahan1">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://linkedin.com/in/sean-hallahan-34a041142">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://github.com/sfhallahan">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <article class="post-container">
+    <h1 class="post-title centered-text">Redux Basics in 5 Minutes (or less)</h1>
+    <span class="post-date centered-text">August 11, 2017</span>
+    <figure class="img-small-width">
+      <img class="redux-logo-large" src="/img/redux-logo.svg" alt="the redux logo">
+      <figcaption class="img-caption">
+        Boom, the beautiful Redux logo
+      </figcaption>
+    </figure>
+    <p>If you're using React to build your app, chances are you've heard of Redux. Redux is a "predictable state container for
+      JavaScript apps" based on the Flux design pattern. There are many reasons people are raving about Redux, predictability
+      of outcome, maintainability, server side rendering, the list goes on and on. But you're here to get the 50,000 foot
+      overview so you can chime in at the lunch table tomorrow and impress all your friends.</p>
+    <p>Alright, that didn't count towards the 5 minutes... Ready go!</p>
+    <h3 class="sub-header">Key Concepts</h3>
+    <p>
+      <b>State/State Tree - </b>The whole state of your application is represented as a single JavaScript object called the
+      state or State Tree. The state/state tree is READ-ONLY, you cannot write to it. Any time you want to make a change
+      you have to dispatch an action.</p>
+    <p>
+      <b>Action - </b>An action is a plain JavaScript object that describes the change. Each action must have a "type" property,
+      this is usually a string (so that it is serializable) and it cannot be undefined. Aside from that one restriction,
+      you can build your action object to contain whatever information you need to define the change. With an action defined,
+      you have the input</p>
+    <p>
+      <b>Reducer - </b>Reducers allow you to implement the update logic of your app. A reducer is a pure function
+      <a class="hyperlink"
+        href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">(brush up on your understanding of pure functions here)</a> that takes the previous state of the app, an action, and
+      returns the next state. The object returned is a new state object, remember state is immutable.</p>
+    <p>
+      <b>Store - </b>The store is how you tie it all together. The store holds current state, lets you dispatch actions, and
+      allows you to specify your reducers. In Redux there is a single store with a single root reducing function. To create
+      a store you simply call the createStore method from Redux and pass it your reducer. The store object has 3 important
+      methods</p>
+    <ol>
+      <li>
+        <b>getState() </b> - Gets the current application state</li>
+      <li>
+        <b>dispatch(action) </b> - Changes the current application state. Takes the action as an argument and passes it, along
+        with the current state, to the reducer.</li>
+      <li>
+        <b>subscribe(function) </b> - Allows functions to subscribe to the changes so that they can react/re-render with the
+        new state</li>
+    </ol>
+    <p>In a simple use case you would have a render method subscribed to the store. That render method would user the .getState()
+      method to make sure it had the latest and greatest state to display on the UI. An event on the UI would call the dispatch
+      method, which would in turn update the state. The render method which is subscribed would be notified of the update,
+      get the new state and re-render.</p>
+    <h3 class="sub-header">Simple example</h3>
+    <p>
+      I believe a code example is worth a thousand words.. so I borrowed the example from the
+      <a class="hyperlink" href="http://redux.js.org/">Redux docs</a> (which I highly recommend going through when you have more than 5 minutes), stripped it down and updated
+      it to ES6 syntax. It's a simple counter app that allows your to increment and decrement the number displayed in the
+      browser. It's just one html file with our Redux JavaScript baked right in. The full source code can be found on
+      <a
+        class="hyperlink" href="https://github.com/sfhallahan/reduxCounterExample">GitHub</a>.
+    </p>
+    <p>To start, here is the html we will be using.</p>
+    <script src="https://gist.github.com/sfhallahan/efd76b7206e42517c5bd84c0aa8273ae.js"></script>
+    <p>Since we are using a single HTML file make sure to include a script tag in the header to add Redux to your app. The src
+      can be found
+      <a class="hyperlink" href="https://unpkg.com/redux@latest/dist/redux.min.js">here</a>.</p>
+    <p>Now on to redux. First we define our simple actions</p>
+    <script src="https://gist.github.com/sfhallahan/0f4b35de62b4902308c86db584277e97.js"></script>
+    <p>Next we need to define our reducer. Remember it needs to take our current state and an action and return a new state
+      object.</p>
+    <script src="https://gist.github.com/sfhallahan/57a6817ba47b0a4473b9902d377657da.js"></script>
+    <p>We need to create our store by calling the Redux createStore method and passing it our reducer.</p>
+    <p>Then we'll render our updates using a… render method. Note how it uses the Redux store getState() method. We're also
+      going to subscribe our render method to the store so that it knows to get the state when a change is made. We're also
+      making an initial call to the render method so that the initial count of 0 displays when you load the page.</p>
+    <script src="https://gist.github.com/sfhallahan/3bc305a9995745ccf2ea3f221657cfc4.js"></script>
+    <p>Last but not least, we need our dispatch our actions when UI events occur. In our case they look like this</p>
+    <script src="https://gist.github.com/sfhallahan/6e19bb84ca54eb163d13205bebffb2d1.js"></script>
+    <p>There you have it, a nice little Redux app to play around with. Hopefully you now have a high level understanding of
+      Redux and can go out there and impress all your friends. If you have any feedback or questions, you can always reach
+      me on my twitter or linkedIn. Just click the icons in the navigation bar.</p>
+  </article>
+
+  <div class="subscribe-container">
+    <h3 class="subscribe-header">Like this post?</h2>
+      <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
+      <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
+      <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add"
+        class="email-octopus-form subscribe-form">
+        <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
+        <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
+        <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
+        <div class="email-octopus-form-row-hp" aria-hidden="true">
+          <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
+        </div>
+      </form>
+      <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+  </div>
+  <footer class="footer">
+    <p class="footer-text">
+      &copy; 2018, Sean Hallahan
+    </p>
+  </footer>
+</body>
+
 </html>
