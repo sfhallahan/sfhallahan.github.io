@@ -1,229 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-102583605-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <title>What is a PWA - Sean Hallahan</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="An introduction to progressive web applications, answering the question, what makes a web app progressive?">
-    <meta charset="UTF-8">
-    <link href="/css/main.min.css" rel="stylesheet" />
-    <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)"/>
-    <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
-    <script async src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-    <script src="/js/main.min.js"></script>
-  </head>
-  <body>
-    <header id="header" class="header nav-down">
-        <div class="site-title-container">
-          <div id="site-title"><a href="/">Sean Hallahan</a></div>
-          <span id="site-subtitle">Full-stack web developer</span>
-        </div>
-        <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
-          <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"/></svg>
 
-        </button>
-        <div class="nav-container closed" id="nav-container">
-          <ul class="nav-options">
-            <li class="nav-item nav-active"><a href="/">BLOG</a></li>
-            <li class="nav-item"><a href="/about">ABOUT</a></li>
-            <li class="nav-item"><a href="/projects">PROJECTS</a></li>
-          </ul>
-          <ul class="social-options">
-            <li class="social-icon">
-              <a href="https://twitter.com/seanhallahan1">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-              </a>
-            </li>
-            <li class="social-icon">
-              <a href="https://linkedin.com/in/sean-hallahan-34a041142">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"/></svg>
-              </a>
-            </li>
-            <li class="social-icon">
-              <a href="https://github.com/sfhallahan">
-                <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon"><path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"/></svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-    </header>
-      <article class="post-container">
-          <h1 class="post-title centered-text">What the heck is a Progressive Web App?</h1>
-          <span class="post-date centered-text">January 17, 2018</span>
-          <figure class="img-full-width">
-            <img src="/img/PWA.jpg"
-                 srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w"
-                 class="restrict-img-height"
-                 alt="Display of mobile homescreen">
-          </figure>
-          <p>
-            Last week I was lucky enough to receive the "Grow with Google" scholarship
-            for the Mobile Web track. The scholarship covers tuition for a Udacity
-            course developed by Google called <a class="hyperlink" href="https://www.udacity.com/course/offline-web-applications--ud899">"Offline Web Applications"</a>,
-            access to a private a support forum and dedicated course mentors to provide
-            guidance and feedback. I honestly wasn’t sure what the course was going to
-            cover, or why offline first would be useful, but it was made by Google
-            and they usually know what they’re doing when it comes to the web.
-          </p>
-          <p>
-            I ventured off into the course. The intro lessons showed how designing
-            a web application to be offline first fit into the concept of "Progressive
-            Web Applications" (PWA’s). I had heard the term PWA thrown around in my
-            internet travels but never really paid them much mind until these lessons.
-            I’m going to assume you are naive, much like I was at the beginning of my
-            journey (3 days ago) and guide you through makes a web app "Progressive."
-          </p>
-          <h3 class="sub-header">What is a PWA?</h3>
-          <p>
-            A Progressive Web App (PWA) is a web application that attempts to
-            deliver the native mobile experience that users have come to expect
-            from App/Play store applications. To me, this means when you access
-            the app on your phone, you look around and think:
-          </p>
-          <blockquote class="quote">
-            "Hmmm, I don’t feel like I'm in a browser, but I sure don’t remember
-            downloading this from the App Store."
-          </blockquote>
-          <p>
-            So what’s the gap between a traditional web app and something you
-            would see from a native app? And how does a PWA fill that gap?
-          </p>
-          <h5 class="section-header">Accessible from the Homescreen</h5>
-          <p>
-            To access a web app, you open up Chrome
-            (or whatever browser you use), click the address bar, type in the url
-            then hit enter. You wait for the page to load, and finally you get something.
-            With a native app it's just click the app icon on the homescreen and BOOM
-            splash screen.
-          </p>
-          <figure class="img-small-width">
-            <img src="/img/fb_splashscreen.png" alt="Facebook splash screen" />
-            <figcaption class="img-caption">
-              Facebook splash screen
-            </figcaption>
-          </figure>
-          <p>
-            We need an icon and splash screen. A PWA gets this done by including
-            a Web App Manifest file. In the manifest there are details on the icon,
-            app name, and colors/themes for the splash screen. When using the app
-            for the first time, users get a prompt to add a homescreen shortcut and
-            volia, a nice little app icon on the homescreen and a splash screen while
-            the app loads.
-          </p>
-          <p>
-            Alright, that wasn't so bad, what's next?
-          </p>
-          <h5 class="section-header">Works Offline</h5>
-          <p>
-            Put your phone in airplane mode, or go get lost in the woods. Now go
-            into the mobile browser and open up facebook.com, what do you see?
-            Probably an error.
-          <p>
-            Okay, now open up the facebook app on your phone. You get the navigation bar,
-            maybe some old posts and a message that you are offline. You can't do
-            much but you're not completely crippled. This is gap number 2. PWA's
-            must be designed and built to work offline first.
-          </p>
-          <div class="side-by-side">
-            <figure>
-              <img src="/img/offline_webapp.png" alt="offline web application error screen" />
-              <figcaption class="img-caption">
-                Offline web app
-              </figcaption>
-            </figure>
-            <figure>
-              <img src="/img/offline_mobileapp.png" alt="offile mobile application screen that still displays app skeleton" />
-              <figcaption class="img-caption">
-                Offline mobile app
-              </figcaption>
-            </figure>
-          </div>
-          <p>
-            PWA's achieve this by using what's called a "Service Worker". At its
-            core the Service worker is just a javascript file that operates separate
-            from the webpage. Operating outside the webpage opens up a lot of possibilities,
-            but the feature that allows it to solve the offline first problem is the
-            ability to intercept network requests.
-          </p>
-          <p>
-            On the apps initial load a service worker can create a cache and store
-            critical assets. It can then intercept future network requests and serve
-            the cached content before attempting to retrieve resources from the network.
-            No service? No problem. You can serve the skeleton of your app, recently
-            accessed pages, whatever's in the cache before even trying to hit the network.
-            Users now get something, rather than that pesky 404 or "no internet connection" page.
-          </p>
-          <h5 class="section-header">Responsive</h5>
-          <p>
-            This one is a bit obvious, but maybe the most important. Web
-            applications are often access by multiple screen sizes, where-as native
-            apps are built exclusively for mobile. If you want to give a truly
-            native experience, your app needs to respond appropriately to the screen
-            that it's on and deliver a mobile first experience. New CSS technologies
-            like flexbox and CSS grid are making building responsive web apps easier than ever.
-          </p>
-          <h5 class="section-header">Access to device hardware</h5>
-          <p>
-            Ability to access the device hardware is a gap between native apps and
-            PWA's that is still closing. Fret not, it is closing fast. Service
-            workers have opened up access to native features like push notifications.
-            It won't be long before PWA's can cover 99% of use cases for an app.
-          </p>
-          <h5 class="section-header">Secure (served over https)</h5>
-          <p>
-            The world is a mean place. There are bad people out there that want to
-            steal your stuff and hurt your phone. Mobile apps must be screened by
-            Apple and Google to the App/Play store. A PWA comes straight from the
-            internet so there are the usual
-            dangers that come with web browsing. Additionally, PWA's use a service
-            worker which we mentioned can manipulate requests and access some on the
-            hardware on the device. If someone hijacks your service worker, they can
-            do a lot of damage.  For this reason, in order to even use a service worker
-            your content must be served over https.
-          </p>
-          <h5 class="sub-header">But wait, there's more</h5>
-          <p>
-            These are the largest pieces of the progressive web app puzzle. Google
-            is leading the charge on progressive web apps and has put out a
-            comprehensive checklist for developers to work against when building
-            a PWA. That list can be found
-            <a class="hyperlink" href="https://developers.google.com/web/progressive-web-apps/checklist#baseline">here</a>.
-          </p>
-          <p>
-            If you want to learn more about progressive web apps, I definitely
-            recommend checking out the Google resources on the topic. Also, keep
-            an eye out for some additional posts from me as I work through my course.
-            Some topics I plan to dive into are the mystery of the Service Worker
-            and sending native push notifications from a web app.
-          </p>
-          <p>
-            Happy coding!
-          </p>
-      </article>
-      <div class="subscribe-container">
-        <h3 class="subscribe-header">Like this post?</h2>
-        <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
-        <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
-        <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add" class="email-octopus-form subscribe-form">
-          <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
-          <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
-          <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
-          <div class="email-octopus-form-row-hp" aria-hidden="true">
-            <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
-          </div>
-        </form>
-        <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+<head>
+  <script>
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+    ga('create', 'UA-102583605-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  <title>What is a PWA - Sean Hallahan</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="An introduction to progressive web applications, answering the question, what makes a web app progressive?">
+  <meta charset="UTF-8">
+  <link href="/css/main.min.css" rel="stylesheet" />
+  <link href="/css/main-desktop.min.css" rel="stylesheet" media="screen and (min-width:721px)" />
+  <link href="/css/main-mobile.min.css" rel="stylesheet" media="screen and (max-width:720px)" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+</head>
+
+<body>
+  <header id="header" class="header nav-down">
+    <div class="site-title-container">
+      <div id="site-title">
+        <a href="/">Sean Hallahan</a>
       </div>
-      <footer class="footer">
-          <p class="footer-text">
-            &copy; 2018, Sean Hallahan
-          </p>
-      </footer>
-  </body>
+      <span id="site-subtitle">Full-stack web developer</span>
+    </div>
+    <button id="toggle-navigation" class="toggle-navigation closed" name="toggle-navigation" aria-expanded="false" aria-label="Toggle navigation menu">
+      <svg width="30" height="34" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+        <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"
+        />
+      </svg>
+
+    </button>
+    <div class="nav-container closed" id="nav-container">
+      <ul class="nav-options">
+        <li class="nav-item nav-active">
+          <a href="/">BLOG</a>
+        </li>
+        <li class="nav-item">
+          <a href="/about">ABOUT</a>
+        </li>
+        <li class="nav-item">
+          <a href="/projects">PROJECTS</a>
+        </li>
+      </ul>
+      <ul class="social-options">
+        <li class="social-icon">
+          <a href="https://twitter.com/seanhallahan1">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" preserveAspectRatio xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5t-61.5 148.5q0 29 5 48-129-7-242-65t-192-155q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162 24.5-168.5q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://linkedin.com/in/sean-hallahan-34a041142">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M365 1414h231v-694h-231v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5t92.5 34.5h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2v-101h-231q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z"
+              />
+            </svg>
+          </a>
+        </li>
+        <li class="social-icon">
+          <a href="https://github.com/sfhallahan">
+            <svg width="28" height="28" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" class="svg-icon">
+              <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <article class="post-container">
+    <h1 class="post-title centered-text">What the heck is a Progressive Web App?</h1>
+    <span class="post-date centered-text">January 17, 2018</span>
+    <figure class="img-full-width">
+      <img src="/img/PWA.jpg" srcset="/img/PWA-1280w.jpg 1280w, /img/PWA-760w.jpg 760w, /img/PWA-320w.jpg 320w" class="restrict-img-height"
+        alt="Display of mobile homescreen">
+    </figure>
+    <p>
+      Last week I was lucky enough to receive the "Grow with Google" scholarship for the Mobile Web track. The scholarship covers
+      tuition for a Udacity course developed by Google called
+      <a class="hyperlink" href="https://www.udacity.com/course/offline-web-applications--ud899">"Offline Web Applications"</a>, access to a private a support forum and dedicated course mentors to provide guidance
+      and feedback. I honestly wasn’t sure what the course was going to cover, or why offline first would be useful, but
+      it was made by Google and they usually know what they’re doing when it comes to the web.
+    </p>
+    <p>
+      I ventured off into the course. The intro lessons showed how designing a web application to be offline first fit into the
+      concept of "Progressive Web Applications" (PWA’s). I had heard the term PWA thrown around in my internet travels but
+      never really paid them much mind until these lessons. I’m going to assume you are naive, much like I was at the beginning
+      of my journey (3 days ago) and guide you through makes a web app "Progressive."
+    </p>
+    <h3 class="sub-header">What is a PWA?</h3>
+    <p>
+      A Progressive Web App (PWA) is a web application that attempts to deliver the native mobile experience that users have come
+      to expect from App/Play store applications. To me, this means when you access the app on your phone, you look around
+      and think:
+    </p>
+    <blockquote class="quote">
+      "Hmmm, I don’t feel like I'm in a browser, but I sure don’t remember downloading this from the App Store."
+    </blockquote>
+    <p>
+      So what’s the gap between a traditional web app and something you would see from a native app? And how does a PWA fill that
+      gap?
+    </p>
+    <h5 class="section-header">Accessible from the Homescreen</h5>
+    <p>
+      To access a web app, you open up Chrome (or whatever browser you use), click the address bar, type in the url then hit enter.
+      You wait for the page to load, and finally you get something. With a native app it's just click the app icon on the
+      homescreen and BOOM splash screen.
+    </p>
+    <figure class="img-small-width">
+      <img src="/img/fb_splashscreen.png" alt="Facebook splash screen" />
+      <figcaption class="img-caption">
+        Facebook splash screen
+      </figcaption>
+    </figure>
+    <p>
+      We need an icon and splash screen. A PWA gets this done by including a Web App Manifest file. In the manifest there are details
+      on the icon, app name, and colors/themes for the splash screen. When using the app for the first time, users get a
+      prompt to add a homescreen shortcut and volia, a nice little app icon on the homescreen and a splash screen while the
+      app loads.
+    </p>
+    <p>
+      Alright, that wasn't so bad, what's next?
+    </p>
+    <h5 class="section-header">Works Offline</h5>
+    <p>
+      Put your phone in airplane mode, or go get lost in the woods. Now go into the mobile browser and open up facebook.com, what
+      do you see? Probably an error.
+      <p>
+        Okay, now open up the facebook app on your phone. You get the navigation bar, maybe some old posts and a message that you
+        are offline. You can't do much but you're not completely crippled. This is gap number 2. PWA's must be designed and
+        built to work offline first.
+      </p>
+      <div class="side-by-side">
+        <figure>
+          <img src="/img/offline_webapp.png" alt="offline web application error screen" />
+          <figcaption class="img-caption">
+            Offline web app
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="/img/offline_mobileapp.png" alt="offile mobile application screen that still displays app skeleton" />
+          <figcaption class="img-caption">
+            Offline mobile app
+          </figcaption>
+        </figure>
+      </div>
+      <p>
+        PWA's achieve this by using what's called a "Service Worker". At its core the Service worker is just a javascript file that
+        operates separate from the webpage. Operating outside the webpage opens up a lot of possibilities, but the feature
+        that allows it to solve the offline first problem is the ability to intercept network requests.
+      </p>
+      <p>
+        On the apps initial load a service worker can create a cache and store critical assets. It can then intercept future network
+        requests and serve the cached content before attempting to retrieve resources from the network. No service? No problem.
+        You can serve the skeleton of your app, recently accessed pages, whatever's in the cache before even trying to hit
+        the network. Users now get something, rather than that pesky 404 or "no internet connection" page.
+      </p>
+      <h5 class="section-header">Responsive</h5>
+      <p>
+        This one is a bit obvious, but maybe the most important. Web applications are often access by multiple screen sizes, where-as
+        native apps are built exclusively for mobile. If you want to give a truly native experience, your app needs to respond
+        appropriately to the screen that it's on and deliver a mobile first experience. New CSS technologies like flexbox
+        and CSS grid are making building responsive web apps easier than ever.
+      </p>
+      <h5 class="section-header">Access to device hardware</h5>
+      <p>
+        Ability to access the device hardware is a gap between native apps and PWA's that is still closing. Fret not, it is closing
+        fast. Service workers have opened up access to native features like push notifications. It won't be long before PWA's
+        can cover 99% of use cases for an app.
+      </p>
+      <h5 class="section-header">Secure (served over https)</h5>
+      <p>
+        The world is a mean place. There are bad people out there that want to steal your stuff and hurt your phone. Mobile apps
+        must be screened by Apple and Google to the App/Play store. A PWA comes straight from the internet so there are the
+        usual dangers that come with web browsing. Additionally, PWA's use a service worker which we mentioned can manipulate
+        requests and access some on the hardware on the device. If someone hijacks your service worker, they can do a lot
+        of damage. For this reason, in order to even use a service worker your content must be served over https.
+      </p>
+      <h5 class="sub-header">But wait, there's more</h5>
+      <p>
+        These are the largest pieces of the progressive web app puzzle. Google is leading the charge on progressive web apps and
+        has put out a comprehensive checklist for developers to work against when building a PWA. That list can be found
+        <a class="hyperlink" href="https://developers.google.com/web/progressive-web-apps/checklist#baseline">here</a>.
+      </p>
+      <p>
+        If you want to learn more about progressive web apps, I definitely recommend checking out the Google resources on the topic.
+        Also, keep an eye out for some additional posts from me as I work through my course. Some topics I plan to dive into
+        are the mystery of the Service Worker and sending native push notifications from a web app.
+      </p>
+      <p>
+        Happy coding!
+      </p>
+  </article>
+  <div class="subscribe-container">
+    <h3 class="subscribe-header">Like this post?</h2>
+      <p class="subscribe-subheader">Enter your email address below and I'll notify you when I post new content!</p>
+      <p id="error-message" class="email-octopus-error-message subscribe-subheader"></p>
+      <form id="subscribe-form" method="post" action="https://emailoctopus.com/lists/ab019fbc-f4b0-11e7-a98f-06b2d989fe84/members/external-add"
+        class="email-octopus-form subscribe-form">
+        <input id="email" type="email" name="emailAddress" class="email-octopus-email-address" placeholder="email address">
+        <input type="hidden" name="successRedirectUrl" class="email-octopus-success-redirect-url" value="">
+        <button id="submit-button" class="submit-button" type="submit">SUBSCRIBE</button>
+        <div class="email-octopus-form-row-hp" aria-hidden="true">
+          <input type="text" name="hpab019fbc-f4b0-11e7-a98f-06b2d989fe84" tabindex="-1" autocomplete="nope">
+        </div>
+      </form>
+      <p id="success-message" class="email-octopus-success-message subscribe-subheader"></p>
+  </div>
+  <footer class="footer">
+    <p class="footer-text">
+      &copy; 2018, Sean Hallahan
+    </p>
+  </footer>
+  <script src="/js/main.min.js"></script>
+
+</body>
+
 </html>
